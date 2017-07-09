@@ -1,5 +1,6 @@
 #!/usr/bin/env python3.5
 import os
+from random import randint
 
 P1 = "[X]"
 P2 = "[O]"
@@ -68,6 +69,22 @@ class Game:
         except Exception as e:
             return 1
 
+    def check_table_full(self):
+        for i in range(len(self.g_map)):
+            for x in range(len(self.g_map[i])):
+                if self.g_map[i][x] == '':
+                    return False
+
+        return True
+
+
+    def gen_move(self,p):
+        move = tuple((randint(0,2),randint(0,2)))
+        #while self.map_move(move,p):
+        #    move = tuple((randint(0,2),randint(0,2)))
+        print(move)
+        return move
+
     def cls(self):
         if os.name == 'nt':
             os.system('cls')
@@ -80,28 +97,34 @@ if __name__ == "__main__":
     while start == 'y':
         g = Game(3)
         turn = 1
-        win = False
-        while win == False:
+        TableFull = P1win = P2win = False
+        g.cls()
+
+        while P1win == False and P2win == False and TableFull == False:
             if turn % 2 != 0:
                 g.draw_table()
                 while g.map_move(g.get_move("P1"), P1):
                     print("Invalid move")
                 if g.check_win(g.g_map, g.last_move):
-                    print("P1 Won this game")
-                    g.draw_table()
-                    win = True
+                    P1win = True
+                TableFull = g.check_table_full()
             else:
                 g.draw_table()
-                while g.map_move(g.get_move("P2"), P2):
+                while g.map_move(g.gen_move("P2"), P2):
                     print("Invalid Move")
                 if g.check_win(g.g_map, g.last_move):
-                    print("P2 Won this game")
-                    g.draw_table()
-                    win = True
+                    P2win = True
+                TableFull = g.check_table_full()
             turn += 1
             g.cls()
-    
-        start  = input("\nWould you like to try again?[y/n]: ").lower()
+
+        g.draw_table()
+        if P1win:
+            print("You won this game")
+        elif P2win:
+            print("Computer won this game")
+        elif TableFull:
+            print("No luck this time")
+        start  = input("\nWould you like to play again?[y/n]: ").lower()
 
 
-    
