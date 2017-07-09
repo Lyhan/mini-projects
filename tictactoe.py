@@ -77,13 +77,36 @@ class Game:
 
         return True
 
-
-    def gen_move(self,p):
-        move = tuple((randint(0,2),randint(0,2)))
-        #while self.map_move(move,p):
-        #    move = tuple((randint(0,2),randint(0,2)))
-        print(move)
-        return move
+    def gen_move(self, table,p):
+        for i in range(self.cells):
+            # Chech horizontally
+            if table[i][0] == table[i][2] != '' and table[i][1] == '':
+                return tuple((i,1))
+            if table[i][0] == table[i][1] != '' and table[i][2] == '':
+                return tuple((i,2))
+            if table[i][1] == table[i][2] != '' and table[i][0] == '':
+                return tuple((i,0))
+            # Check vertically
+            if table[0][i] == table[1][i] != '' and table[2][i] == '':
+                return tuple((2,i))
+            if table[0][i] == table[2][i] != '' and table[1][i] == '':
+                return tuple((1,i))
+            if table[1][i] == table[2][i] != '' and table[0][i] == '':
+                return tuple((0,i))
+        # Check diagonals
+        if table[0][0] == table[1][1] != '' and table[2][2] == '':
+            return tuple((2,2))
+        if table[0][0] == table[2][2] != '' and table[1][1] == '':
+            return tuple((1,1))
+        if table[1][1] == table[2][2] != '' and table[0][0] == '':
+            return tuple((0,0))
+        if table[0][2] == table[1][1] != '' and table[2][0] == '':
+            return tuple((2,0))
+        if table[1][1] == table[2][0] != '' and table[0][2] == '':
+            return tuple((0,2))
+        if table[0][2] == table[2][0] != '' and table[1][1] == '':
+            return tuple((1,1))
+        return tuple((randint(0, 2), randint(0, 2)))
 
     def cls(self):
         if os.name == 'nt':
@@ -110,7 +133,7 @@ if __name__ == "__main__":
                 TableFull = g.check_table_full()
             else:
                 g.draw_table()
-                while g.map_move(g.gen_move("P2"), P2):
+                while g.map_move(g.gen_move(g.g_map, "P2"), P2):
                     print("Invalid Move")
                 if g.check_win(g.g_map, g.last_move):
                     P2win = True
@@ -125,6 +148,4 @@ if __name__ == "__main__":
             print("Computer won this game")
         elif TableFull:
             print("No luck this time")
-        start  = input("\nWould you like to play again?[y/n]: ").lower()
-
-
+        start = input("\nWould you like to play again?[y/n]: ").lower()
