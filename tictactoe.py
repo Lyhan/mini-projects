@@ -68,7 +68,7 @@ class Game:
         for priority in Computer,Player:
             for i in range(self.cells):
                 # Give priority to first player in list (try to win)
-                print("{} - {}".format(i,priority))
+                #print("{} - {}".format(i,priority))
                 # Chech horizontally
                 if table[i][0] == table[i][2] == priority and table[i][1] == '':
                     return tuple((i,1))
@@ -132,7 +132,7 @@ if __name__ == "__main__":
                     ComputerWins = True
                 TableFull = g.check_table_full()
             turn += 1
-            #g.cls()
+            g.cls()
 
         g.draw_table()
         if PlayerWins:
