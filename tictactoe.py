@@ -28,7 +28,6 @@ class Game:
             if self.g_map[p[0]][p[1]] == '':
                 self.g_map[p[0]][p[1]] = px
                 self.last_move = p
-                self.last_player = px
             else:
                 return 1
         except Exception as e:
@@ -66,9 +65,10 @@ class Game:
         return True
 
     def gen_move(self, table):
-        for i in range(self.cells):
-            # Give priority to first player in list (try to win)
-            for priority in Computer,Player:
+        for priority in Computer,Player:
+            for i in range(self.cells):
+                # Give priority to first player in list (try to win)
+                print("{} - {}".format(i,priority))
                 # Chech horizontally
                 if table[i][0] == table[i][2] == priority and table[i][1] == '':
                     return tuple((i,1))
@@ -126,12 +126,13 @@ if __name__ == "__main__":
                 TableFull = g.check_table_full()
             else:
                 g.draw_table()
-                g.map_move(g.gen_move(g.g_map), Computer)
+                while g.map_move(g.gen_move(g.g_map), Computer):
+                    pass
                 if g.check_win(g.g_map, g.last_move):
                     ComputerWins = True
                 TableFull = g.check_table_full()
             turn += 1
-            g.cls()
+            #g.cls()
 
         g.draw_table()
         if PlayerWins:
