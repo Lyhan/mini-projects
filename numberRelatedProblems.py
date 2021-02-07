@@ -71,13 +71,12 @@ The next number is found by adding up the two numbers before it
 Example: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, ...
 """
 def fibonacci(number):
-    start = prev = 0
+    current = prev = 0
     result = list()
-    while start < number:
-        result.append(start)
-        if start < 1:
-            start += 1
+    while current < number:
+        result.append(current)
+        if current < 1:
+            current += 1
         else:
-            prev, start = start, start + prev
+            prev, current = current, current + prev
     return result
-
