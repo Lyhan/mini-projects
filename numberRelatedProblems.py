@@ -12,7 +12,7 @@ numbers = {
 """
 
 
-def solution1(value):
+def romanNumberConversionSolution1(value):
     lookupTable = [
         ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX'],
         ['X', 'XX', 'XXX', 'XL', 'L', 'LX', 'LXX', 'LXXX', 'XC'],
@@ -30,7 +30,7 @@ def solution1(value):
     return result
 
 
-def solution2(value):
+def romanNumberConversionSolution2(value):
     romanSymbols = [
         ['I', 'V'],
         ['X', 'L'],
@@ -57,5 +57,27 @@ def solution2(value):
     return result
 
 
-print(solution1(1111), solution1(1999))
-print(solution2(1111), solution1(1999))
+""" 
+A factorial is a function that multiplies a number by every number below it.
+Example 5!= 5*4*3*2*1=120.
+"""
+def factorial(number):
+    if number == 1:
+        return 1
+    return number * factorial(number - 1)
+
+"""
+The next number is found by adding up the two numbers before it
+Example: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, ...
+"""
+def fibonacci(number):
+    start = prev = 0
+    result = list()
+    while start < number:
+        result.append(start)
+        if start < 1:
+            start += 1
+        else:
+            prev, start = start, start + prev
+    return result
+
